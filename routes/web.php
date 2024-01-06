@@ -35,4 +35,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+Route::group(['prefix' => 'user'],function () {
+    Route::post('/', [\App\Http\Controllers\UserController::class, 'get'])->name('user.get');
+});
+
+Route::group(['prefix' => 'notification'],function () {
+    Route::get('/', [\App\Http\Controllers\NotificationController::class, 'index'])->name('notification.index');
+    Route::post('/store', [\App\Http\Controllers\NotificationController::class, 'store'])->name('notification.store');
+});
+
+
+require __DIR__ . '/auth.php';
